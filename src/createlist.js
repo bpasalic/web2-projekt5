@@ -115,24 +115,26 @@ document.addEventListener("DOMContentLoaded", function () {
     itemsList.appendChild(listItem);
 
   }
-});
-const imageUploadInput = document.getElementById("imageUpload");
-imageUploadInput.addEventListener('change', function (event) {
-  const file = event.target.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const imageData = e.target.result;
-      shoppingListItems.push({ image: imageData });
+  const imageUploadInput = document.getElementById("imageUpload");
+  imageUploadInput.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const imageData = e.target.result;
+        shoppingListItems.push({ image: imageData });
+        console.log(shoppingListItems)
+        const listItem = document.createElement('li');
+        const imageElement = new Image();
+        imageElement.src = imageData;
+        imageElement.width = 200;
+        imageElement.height = 200;
+        listItem.appendChild(imageElement);
+        itemsList.appendChild(listItem);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-      const listItem = document.createElement('li');
-      const imageElement = new Image();
-      imageElement.src = imageData;
-      imageElement.width = 200;
-      imageElement.height = 200;
-      listItem.appendChild(imageElement);
-      itemsList.appendChild(listItem);
-    };
-    reader.readAsDataURL(file);
-  }
 });
+
