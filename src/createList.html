@@ -43,11 +43,12 @@
         <p>OR</p>
 
         <main>
-            <button id="openCamera">Take Picture of the item</button>
+            <button type="button" id="openCamera">Open Camera</button>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <button type="button" id="captureImage" hidden>Capture Image</button>
             <video id="cameraStream" hidden></video>
             <img id="capturedImage" src="" hidden>
         </main>
-
 
         <button type="submit">Create List</button>
     </form>
@@ -55,7 +56,7 @@
     <footer>
         <p>© 2023 Shopping List App</p>
     </footer>
-    <script src="createlist.js"></script>
+    <script type="module" src="createlist.js"></script>
 </body>
 
 </html>
