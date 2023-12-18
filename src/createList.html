@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping List App - Create List</title>
+    <link rel="stylesheet" href="theme/global.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <header>
+        <div id="logoContainer">
+            <img src="sb_icon.png" width="40px" height="40px" />
+            <h1>Shopping List Manager</h1>
+        </div>
+        <nav>
+            <a href="index.html">Home</a> |
+            <a href="createList.html">Create List</a>
+        </nav>
+    </header>
+
+    <h1>Create a Shopping List</h1>
+    <form id="shoppingListForm">
+        <div class="add-options">
+            <label for="listTitle">List Title:</label>
+            <input type="text" id="listTitle" name="listTitle" required>
+        </div>
+
+
+        <h3 style="margin-bottom:0px">Items:</h3>
+        <ul style="margin-top:0px" id="itemsList">
+        </ul>
+
+
+        <div class="add-options">
+            <label for="itemName">Add Item:</label>
+            <input type="text" id="itemName" name="itemName" placeholder="Enter item name">
+            <button type="button" id="addItem">Add</button>
+        </div>
+
+        <p>OR</p>
+
+        <main>
+            <button id="openCamera">Take Picture of the item</button>
+            <video id="cameraStream" hidden></video>
+            <img id="capturedImage" src="" hidden>
+        </main>
+
+
+        <button type="submit">Create List</button>
+    </form>
+
+    <footer>
+        <p>© 2023 Shopping List App</p>
+    </footer>
+    <script src="createlist.js"></script>
+</body>
+
+</html>

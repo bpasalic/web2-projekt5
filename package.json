@@ -1,0 +1,28 @@
+{
+  "name": "shopping-list-manager",
+  "version": "1.0.0",
+  "description": "Your personal shopping assistant.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "generate-vapid": "web-push generate-vapid-keys"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/suicasolutions/shopping-list-manager.git"
+  },
+  "author": "Barbara Pasalic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/suicasolutions/shopping-list-manager/issues"
+  },
+  "homepage": "https://gitlab.com/suicasolutions/shopping-list-manager#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs-extra": "^10.0.0",
+    "multer": "^1.4.3",
+    "nodemon": "^2.0.12",
+    "web-push": "^3.4.5"
+  }
+}
