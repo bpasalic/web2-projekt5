@@ -41,6 +41,31 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
     event.respondWith(
+        fetch(event.request).then((response) => {
+            if (!response || response.status === 404) {
+                return caches.match("404.html");
+            }
+            return caches.open(staticCacheName).then((cache) => {
+                cache.put(event.request.url, response.clone());
+                return response;
+            });
+        }).catch((error) => {
+            console.log("Error", event.request.url, error);
+
+            if (event.request.url.includes('sb_icon.png')) {
+                return caches.match('sb_icon.png');
+            }
+            if (event.request.url.includes('theme/global.css')) {
+                return caches.match('theme/global.css');
+            }
+            return caches.match("offline.html");
+        })
+    );
+})
+
+/*
+self.addEventListener("fetch", (event) => {
+    event.respondWith(
         caches
             .match(event.request)
             .then((response) => {
@@ -65,9 +90,12 @@ self.addEventListener("fetch", (event) => {
             })
             .catch((error) => {
                 console.log("Error", event.request.url, error);
-                // ovdje možemo pregledati header od zahtjeva i možda vratiti različite fallback sadržaje
-                // za različite zahtjeve - npr. ako je zahtjev za slikom možemo vratiti fallback sliku iz cachea
-                // ali zasad, za sve vraćamo samo offline.html:
+                if (event.request.url.includes('sb_icon.png')) {
+                    return caches.match('sb_icon.png');
+                }
+                if (event.request.url.includes('theme/global.css')) {
+                    return caches.match('theme/global.css');
+                }
                 return caches.match("offline.html");
             })
     );
