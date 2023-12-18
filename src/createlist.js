@@ -4,9 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const itemsList = document.getElementById("itemsList");
   const itemNameInput = document.getElementById("itemName");
   const addItemButton = document.getElementById("addItem");
-  const createdList = document.getElementById("createdList");
-  const displayedTitle = document.getElementById("displayedTitle");
-  const displayedItems = document.getElementById("displayedItems");
   const openCameraButton = document.getElementById("openCamera");
 
   let shoppingListItems = [];
@@ -27,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(shoppingListItems)
     const listTitle = document.getElementById("listTitle").value;
 
-    // Save the entire shoppingListItems array instead of just text content
     saveShoppingList({ title: listTitle, items: shoppingListItems });
 
     window.location.replace("index.html");
@@ -69,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error accessing the camera: ", error);
-        // Show the image upload input if camera access is denied
         document.getElementById("imageUpload").style.display = "block";
       });
   }
@@ -91,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Captured image element not found");
       return;
     }
-    //capturedImage.src = canvas.toDataURL("image/png");
     capturedImage.hidden = false;
 
     if (cameraStream) {
