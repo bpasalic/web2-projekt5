@@ -5,7 +5,8 @@ const filesToCache = [
     "index.html",
     "offline.html",
     "404.html",
-    "theme/global.css"
+    "theme/global.css",
+    "sb_icon.png"
 ];
 
 const staticCacheName = "static-cache-v2";
@@ -41,48 +42,22 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
     event.respondWith(
-        fetch(event.request).then((response) => {
-            if (!response || response.status === 404) {
-                return caches.match("404.html");
-            }
-            return caches.open(staticCacheName).then((cache) => {
-                cache.put(event.request.url, response.clone());
-                return response;
-            });
-        }).catch((error) => {
-            console.log("Error", event.request.url, error);
-
-            if (event.request.url.includes('sb_icon.png')) {
-                return caches.match('sb_icon.png');
-            }
-            if (event.request.url.includes('theme/global.css')) {
-                return caches.match('theme/global.css');
-            }
-            return caches.match("offline.html");
-        })
-    );
-})
-
-/*
-self.addEventListener("fetch", (event) => {
-    event.respondWith(
         caches
             .match(event.request)
             .then((response) => {
                 if (response) {
-                    // console.log("Found " + event.request.url + " in cache!");
+                    //console.log("Found " + event.request.url + " in cache!");
                     //return response;
                 }
-                // console.log("----------------->> Network request for ",
-                //     event.request.url
-                // );
+                console.log("----------------->> Network request for ",
+                    event.request.url
+                );
                 return fetch(event.request).then((response) => {
-                    // console.log("response.status = " + response.status);
                     if (response.status === 404) {
                         return caches.match("404.html");
                     }
                     return caches.open(staticCacheName).then((cache) => {
-                        // console.log(">>> Caching: " + event.request.url);
+                        console.log(">>> Caching: " + event.request.url);
                         cache.put(event.request.url, response.clone());
                         return response;
                     });
@@ -91,11 +66,15 @@ self.addEventListener("fetch", (event) => {
             .catch((error) => {
                 console.log("Error", event.request.url, error);
                 if (event.request.url.includes('sb_icon.png')) {
-                    return caches.match('sb_icon.png');
+                    // Attempt to return the header icon from the cache
+                    return caches.match('sb_icon.png').then((cacheResponse) => {
+                        if (cacheResponse) {
+                            return cacheResponse;
+                        }
+                    });
                 }
-                if (event.request.url.includes('theme/global.css')) {
-                    return caches.match('theme/global.css');
-                }
+
+                // For other requests, return the offline page
                 return caches.match("offline.html");
             })
     );
